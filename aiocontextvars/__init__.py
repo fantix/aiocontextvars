@@ -2,7 +2,7 @@
 
 __author__ = """Fantix King"""
 __email__ = 'fantix.king@gmail.com'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 from .context import Context
 from .inherit import enable_inherit, disable_inherit, create_task
