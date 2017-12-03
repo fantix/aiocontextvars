@@ -76,7 +76,7 @@ Compatibility
 This is a partial PEP-550 polyfill.
 
 PEP-550 proposed a consistent way across threads, generators and asyncio
-``Task``s, to manage execution context, which is a kind of shared storage as
+``Task`` s, to manage execution context, which is a kind of shared storage as
 the context of such executions, with which one could share data within the same
 execution without passing the data around as function parameters. A close
 example of such context is ``threading.local``, which offers different data
@@ -177,8 +177,8 @@ Credits
 -------
 
 Fantix King is the author and maintainer of this library. ``var.py`` is
-modified based on Guido's ``pep550/simpler.py``_. This library is open source
-software under BSD license.
+modified based on Guido's simpler.py_ about PEP-550. This library is open
+source software under BSD license.
 
 .. _PEP-550: https://www.python.org/dev/peps/pep-0550/#coroutines-and-asynchronous-tasks
-.. _``pep550/simpler.py``: https://git.io/vbOeS
+.. _simpler.py: https://git.io/vbOeS
