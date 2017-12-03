@@ -8,8 +8,6 @@ aiocontextvars
 .. image:: https://img.shields.io/travis/fantix/aiocontextvars.svg
         :target: https://travis-ci.org/fantix/aiocontextvars
 
-* Free software: BSD license
-
 This library offers the "thread local" for Python asyncio, also known as "task
 local".
 
@@ -175,4 +173,12 @@ from parent or not. This information is available through ``Context.inherited``:
        print('Inherited!')
 
 
+Credits
+-------
+
+Fantix King is the author and maintainer of this library. ``var.py`` is
+modified based on Guido's ``pep550/simpler.py``_. This library is open source
+software under BSD license.
+
 .. _PEP-550: https://www.python.org/dev/peps/pep-0550/#coroutines-and-asynchronous-tasks
+.. _``pep550/simpler.py``: https://git.io/vbOeS

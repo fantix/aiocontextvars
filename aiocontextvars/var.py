@@ -9,7 +9,7 @@ _no_default: Any = object()
 class ContextVar(Generic[T]):
     """Context variable.
 
-    https://github.com/gvanrossum/pep550/blob/master/simpler.py
+    Based on: https://git.io/vbOeS
     """
 
     __slots__ = ('_name', '_default', '__weakref__')
