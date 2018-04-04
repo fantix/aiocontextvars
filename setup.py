@@ -25,7 +25,7 @@ test_requirements = [
 
 setup(
     name='aiocontextvars',
-    version='0.1.1',
+    version='0.1.2',
     description="PEP-550 polyfill, execution context for asyncio.",
     long_description=readme + '\n\n' + history,
     author="Fantix King",
