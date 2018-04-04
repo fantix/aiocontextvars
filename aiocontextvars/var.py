@@ -3,7 +3,7 @@ from typing import *
 from .context import Context
 
 T = TypeVar('T')
-_no_default: Any = object()
+_no_default = object()
 
 
 class ContextVar(Generic[T]):
@@ -30,7 +30,7 @@ class ContextVar(Generic[T]):
 
     def get(self, default: T = _no_default) -> T:
         """Return current value."""
-        ctx: Context = Context.current()
+        ctx = Context.current()
         if self in ctx:
             return ctx[self]
         if default is not _no_default:
@@ -41,12 +41,12 @@ class ContextVar(Generic[T]):
 
     def set(self, value: T) -> None:
         """Overwrite current value."""
-        ctx: Context = Context.current()
+        ctx = Context.current()
         ctx[self] = value
 
     def delete(self) -> None:
         """Delete current value."""
-        ctx: Context = Context.current()
+        ctx = Context.current()
         if self in ctx:
             del ctx[self]
         elif self._default is not _no_default:
