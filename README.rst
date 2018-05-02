@@ -8,6 +8,9 @@ aiocontextvars
 .. image:: https://img.shields.io/travis/fantix/aiocontextvars.svg
         :target: https://travis-ci.org/fantix/aiocontextvars
 
+**IMPORTANT:** This package will be deprecated after
+`contextvars asyncio backport`_ is fixed.
+
 This library offers the "thread local" for Python asyncio, also known as "task
 local".
 
@@ -182,3 +185,4 @@ source software under BSD license.
 
 .. _PEP-550: https://www.python.org/dev/peps/pep-0550/#coroutines-and-asynchronous-tasks
 .. _simpler.py: https://git.io/vbOeS
+.. _contextvars asyncio backport: https://github.com/MagicStack/contextvars/issues/2
