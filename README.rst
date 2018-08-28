@@ -11,8 +11,12 @@ aiocontextvars
 **IMPORTANT:** This package will be deprecated after
 `contextvars asyncio backport`_ is fixed.
 
-This library offers the "thread local" for Python asyncio, also known as "task
-local".
+This library is a compatibility wrapper of ``contextvars`` library introduced
+in Python 3.7, or its backport for Python 3.5 and 3.6. It offers the "thread
+local" for Python asyncio, also known as "task local".
+
+Please read more in Python 3.7 [contextvars documentation](
+https://docs.python.org/3/library/contextvars.html).
 
 .. code-block:: python
 
@@ -76,113 +80,48 @@ requests or database connections.
 Compatibility
 -------------
 
-This is a partial PEP-550 polyfill.
+In Python 3.7 this package *is* 100% ``contextvars``.
 
-PEP-550 proposed a consistent way across threads, generators and asyncio
-``Task`` s, to manage execution context, which is a kind of shared storage as
-the context of such executions, with which one could share data within the same
-execution without passing the data around as function parameters. A close
-example of such context is ``threading.local``, which offers different data
-space for different threads. It is obvious that ``threading.local`` cannot be
-used for e.g. ``Task`` because usually all coroutines are scheduled within the
-same thread, generators are similar. That's the main motivation of PEP-550.
-However there's been so much discussion around this PEP about all kinds of
-possibilities and cases, and it couldn't get accepted in a short while, thus we
-decided to come up with this project, trying to solve a subset of all the
-problems PEP-550 tried to solve, which is, as its name indicates, to implement
-a contextual storage for asyncio ``Task``. We tried to build API that is
-compatible with the latest discussion and most possible direction, so that the
-cost to migrate code to future accepted PEP-550 may be minimized - just replace
-the import with:
+In Python 3.5 and 3.6, this package added asyncio support to the PEP-567
+backport package also named ``contextvars``, in a very different way than
+Python 3.7 ``contextvars`` implementation:
 
-.. code-block:: python
+1. ``call_soon()`` and family methods.
 
-   try:
-       from contextvars import ContextVar
-   except ImportError:
-       from aiocontextvars import ContextVar, enable_inherit
-       enable_inherit()
+Python 3.7 added keyword argument ``context`` to ``call_soon()`` and its family
+methods. By default those methods will copy (inherit) the current context and
+run the given method in that context. But ``aiocontextvars`` won't touch the
+loop, so in order to achieve the same effect, you'll need to::
 
+    loop.call_soon(copy_context().run, my_meth)
 
-Inheritance
------------
+2. Task local.
 
-A key feature of ``ContextVar`` is the ability to inherit data across
-``Task``s. When creating a new ``Task`` within another ``Task`` which had a
-``ContextVar`` set, the new ``Task`` shall inherit the ``ContextVar`` values
-from the parent ``Task``. However any changes to the context variables made in
-the parent task after the child task was spawned are not visible to the child
-task. The reason is explained in PEP-550_ - common usage intent and backwards
-compatibility. Please follow the link and read more there. Here's a simple
-example of inheritance:
+Python 3.7 used above keyword argument ``context`` in ``Task`` to make sure
+that each step of a coroutine is ran in the same context inherited at the time
+its driving task was created. Meanwhile, ``aiocontextvars`` uses
+``Task.current_task()`` to achieve similar effect: it hacks asyncio and
+attaches a copied context to the task on its creation, and replaces thread
+local with current task instance to share the context. This behaves identically
+to Python 3.7 in most times. What you need to do is to import
+``aiocontextvars`` before creating loops.
 
-.. code-block:: python
+3. Custom tasks and loops.
 
-   import asyncio
-   from aiocontextvars import ContextVar, enable_inherit
-
-   var = ContextVar('my_variable')
-
-   async def main():
-       var.set('main')
-       loop.create_task(sub())
-       assert var.get() == 'main'
-       var.set('main changed')
-       await asyncio.sleep(2)
-       assert var.get() == 'main changed'
-
-   async def sub():
-       assert var.get() == 'main'
-       await asyncio.sleep(1)
-       assert var.get() == 'main'
-       var.set('sub')
-
-   loop = asyncio.get_event_loop()
-   enable_inherit(loop)
-   loop.run_until_complete(main())
-
-Please be noted that, the inheritance feature needs to be enabled explicitly
-when using aiocontextvars, while it is a builtin feature for PEP-550. Because
-aiocontextvars needs to hack the task factory of a given loop to achieve
-inheritance, so if a custom task factory is needed, make sure it is installed
-before enabling inheritance. It is also possible to disable inheritance and
-remove the task factory hack by calling ``disable_inherit``. Meanwhile the
-return value of ``enable_inherit`` is a PEP-343 context, you can do something
-like this to minimize the impact:
-
-.. code-block:: python
-
-   from aiocontextvars import enable_inherit
-
-   with enable_inherit():
-       loop.create_task(main())
-
-Or even ``aiocontextvars.create_task`` can be used as a short of this:
-
-.. code-block:: python
-
-   from aiocontextvars import create_task
-
-   create_task(main(), loop=loop)
-
-Sometimes it is useful to know whether current ``ContextVar`` is inheriting
-from parent or not. This information is available through ``Context.inherited``:
-
-.. code-block:: python
-
-   from aiocontextvars import Context
-
-   if Context.current().inherited:
-       print('Inherited!')
+Because above hack is done by replacing ``asyncio.get_event_loop`` and
+``loop.create_task``, therefore tasks and loops created by custom/private API
+won't behave correctly as expected, e.g. ``uvloop.new_event_loop()`` or
+``asyncio.Task()``. Also, event loops created before importing
+``aiocontextvars`` are not patched either. So over all, you should import
+``aiocontextvars`` at the beginning before creating event loops, and always use
+``asyncio.*`` to operate loops/policies, and public asyncio API to create
+tasks.
 
 
 Credits
 -------
 
-Fantix King is the author and maintainer of this library. ``var.py`` is
-modified based on Guido's simpler.py_ about PEP-550. This library is open
+Fantix King is the author and maintainer of this library. This library is open
 source software under BSD license.
 
-.. _PEP-550: https://www.python.org/dev/peps/pep-0550/#coroutines-and-asynchronous-tasks
-.. _simpler.py: https://git.io/vbOeS
 .. _contextvars asyncio backport: https://github.com/MagicStack/contextvars/issues/2

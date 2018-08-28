@@ -2,10 +2,26 @@
 History
 =======
 
+0.2.0 (2018-09-05)
+------------------
+
+**This is a breaking change.** Most implementation is replaced with
+``contextvars``. In Python 3.5 and 3.6, ``aiocontextvars`` depends on
+``contextvars`` the PEP-567 backport in PyPI, and patches it to partially
+support asyncio; in Python 3.7 ``aiocontextvars`` is only a delegate to the
+built-in ``contextvars`` library.
+
+* Modified ``ContextVar.set()`` to return a token.
+* Added ``ContextVar.reset(token)``.
+* Removed ``ContextVar.delete()``.
+* Removed ``enable_inherit()`` and ``disable_inherit()``, inherit is always enabled.
+* Added ``copy_context()`` and ``Context.run()``.
+* Removed ``Context.current()`` and ``Context.inherited``.
+
 0.1.2 (2018-04-04)
 ------------------
 
-* Support Python 3.5.
+* Supported Python 3.5.
 
 0.1.1 (2017-12-03)
 ------------------

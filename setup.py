@@ -12,6 +12,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
+    'contextvars==2.3;python_version<"3.7"',
 ]
 
 setup_requirements = [
@@ -34,6 +35,7 @@ setup(
     packages=find_packages(include=['aiocontextvars']),
     include_package_data=True,
     install_requires=requirements,
+    python_requires='>=3.5',
     license="BSD license",
     zip_safe=False,
     keywords='aiocontextvars',

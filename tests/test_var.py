@@ -19,18 +19,18 @@ def test_get_with_default():
 
 def test_set():
     v = test_get()
-    v.set(123)
+    token = v.set(123)
     assert v.get() == 123
     assert v.get(789) == 123
-    return v
+    return v, token
 
 
 def test_set_with_default():
     v = test_get_with_default()
-    v.set(789)
+    token = v.set(789)
     assert v.get() == 789
     assert v.get(0) == 789
-    return v
+    return v, token
 
 
 def test_same_name():
@@ -42,19 +42,18 @@ def test_same_name():
     assert v2.get() == 2
 
 
-def test_delete():
-    v = test_set()
-    v.delete()
+def test_reset():
+    v, token = test_set()
+    v.reset(token)
     with pytest.raises(LookupError):
         v.get()
     assert v.get(456) == 456
-    with pytest.raises(LookupError):
-        v.delete()
+    with pytest.raises(RuntimeError):
+        v.reset(token)
 
 
 def test_delete_with_default():
-    v = test_set_with_default()
-    for _ in range(3):
-        v.delete()
-        assert v.get() == 123
-        assert v.get(0) == 0
+    v, token = test_set_with_default()
+    v.reset(token)
+    assert v.get() == 123
+    assert v.get(0) == 0

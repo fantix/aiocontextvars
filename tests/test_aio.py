@@ -18,25 +18,12 @@ async def test_parallel():
 
 
 # noinspection PyUnusedLocal
-async def test_parallel_with_inherit(inherit):
+async def test_parallel_with_inherit():
     await asyncio.gather(*map(parallel, range(16)))
 
 
-async def test_no_inherit():
-    v.set('initial')
-
-    async def sub():
-        assert v.get('default') == 'default'
-        v.set('sub')
-    fut = asyncio.ensure_future(sub())
-    v.set('update')
-    await asyncio.sleep(0.1)
-    await fut
-    assert v.get('default') == 'update'
-
-
 # noinspection PyUnusedLocal
-async def test_inherit(inherit):
+async def test_inherit():
     v.set('initial')
 
     async def sub():
