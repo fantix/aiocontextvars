@@ -10,4 +10,4 @@ cryptography==2.3.1
 PyYAML==3.13
 pytest==3.7.3
 pytest-runner==4.2
-pytest-asyncio==0.8.0
+pytest-asyncio==0.9.0
