@@ -50,7 +50,7 @@ if sys.version_info < (3, 7):
 
 
     def _patch_loop(loop):
-        if not hasattr(loop, '_orig_create_task'):
+        if loop and not hasattr(loop, '_orig_create_task'):
             loop._orig_create_task = loop.create_task
             loop.create_task = types.MethodType(create_task, loop)
         return loop
