@@ -2,7 +2,7 @@
 History
 =======
 
-0.2.0 (2018-09-05)
+0.2.0 (2018-09-09)
 ------------------
 
 **This is a breaking change.** Most implementation is replaced with
@@ -17,6 +17,7 @@ built-in ``contextvars`` library.
 * Removed ``enable_inherit()`` and ``disable_inherit()``, inherit is always enabled.
 * Added ``copy_context()`` and ``Context.run()``.
 * Removed ``Context.current()`` and ``Context.inherited``.
+* Fixed issue that ``set_event_loop(None)`` fails (contributed by J.J. Jackson in #10 #11)
 
 0.1.2 (2018-04-04)
 ------------------
