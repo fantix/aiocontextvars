@@ -27,7 +27,7 @@ test_requirements = [
 setup(
     name='aiocontextvars',
     version='0.2.0',
-    description="PEP-550 polyfill, execution context for asyncio.",
+    description="Asyncio support for PEP-567 contextvars backport.",
     long_description=readme + '\n\n' + history,
     author="Fantix King",
     author_email='fantix.king@gmail.com',

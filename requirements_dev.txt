@@ -1,13 +1,13 @@
-pip==18.0
-bumpversion==0.5.3
-wheel==0.31.1
-watchdog==0.9.0
-flake8==3.5.0
-tox==3.2.1
-coverage==4.5.1
-Sphinx==1.8.1
-cryptography==2.3.1
-PyYAML==3.13
-pytest==3.8.0
-pytest-runner==4.2
-pytest-asyncio==0.9.0
+pip==18.0  # pyup: update minor
+bumpversion==0.5.3  # pyup: update minor
+wheel==0.31.1  # pyup: update minor
+watchdog==0.9.0  # pyup: update minor
+flake8==3.5.0  # pyup: update minor
+tox==3.2.1  # pyup: update minor
+coverage==4.5.1  # pyup: update minor
+Sphinx==1.8.1  # pyup: update minor
+cryptography==2.3.1  # pyup: update minor
+PyYAML==3.13  # pyup: update minor
+pytest==3.8.0  # pyup: update minor
+pytest-runner==4.2  # pyup: update minor
+pytest-asyncio==0.9.0  # pyup: update minor
