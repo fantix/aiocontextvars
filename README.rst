@@ -9,72 +9,10 @@ aiocontextvars
         :target: https://travis-ci.org/fantix/aiocontextvars
 
 **IMPORTANT:** This package will be deprecated after
-`contextvars asyncio backport`_ is fixed.
-
-This library is a compatibility wrapper of ``contextvars`` library introduced
-in Python 3.7, or its backport for Python 3.5 and 3.6. It offers the "thread
-local" for Python asyncio, also known as "task local".
-
-Please read more in Python 3.7 [contextvars documentation](
-https://docs.python.org/3/library/contextvars.html).
-
-.. code-block:: python
-
-   import asyncio
-   from aiocontextvars import ContextVar
-
-   var = ContextVar('my_variable')
-
-   async def main():
-       var.set('main')
-       await sub()
-       assert var.get() == 'sub'
-
-   async def sub():
-       assert var.get() == 'main'
-       var.set('sub')
-       assert var.get() == 'sub'
-
-   loop = asyncio.get_event_loop()
-   loop.run_until_complete(main())
-
-In above example, value ``main`` was stored in ``var``, and the following code
-could then retrieve the value wherever ``var`` is available, without having to
-pass this value around as parameter, e.g. in ``sub``. In the mean time, ``sub``
-could also mutate the value, while being visible to its caller.
-
-Different than a global variable and similar to thread local, a ``ContextVar``
-keeps the different values set in different tasks, without messing up:
-
-.. code-block:: python
-
-   import asyncio
-   from aiocontextvars import ContextVar
-
-   var = ContextVar('my_variable')
-
-   async def main(count):
-       var.set(count)
-       await asyncio.sleep(1)  # make sure all counts are set before assertion
-       await sub(count)
-       assert var.get() == count + 1
-
-   async def sub(count):
-       assert var.get() == count
-       var.set(count + 1)
-       assert var.get() == count + 1
-
-   loop = asyncio.get_event_loop()
-
-   tasks = []
-   for i in range(8):
-       tasks.append(loop.create_task(main(i)))
-
-   loop.run_until_complete(asyncio.gather(*tasks))
-
-
-With such, it is usually used to store non-global but shared states, e.g.
-requests or database connections.
+`contextvars asyncio backport`_ is fixed. Before then, this library
+experimentally provides the missing asyncio support for the
+``contextvars`` backport library. Please read more in Python 3.7 `contextvars
+documentation <https://docs.python.org/3/library/contextvars.html>`_.
 
 
 Compatibility
