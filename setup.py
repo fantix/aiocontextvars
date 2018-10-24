@@ -32,7 +32,7 @@ setup(
     author="Fantix King",
     author_email='fantix.king@gmail.com',
     url='https://github.com/fantix/aiocontextvars',
-    packages=find_packages(include=['aiocontextvars']),
+    py_modules=['aiocontextvars'],
     include_package_data=True,
     install_requires=requirements,
     python_requires='>=3.5',
