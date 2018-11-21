@@ -6,7 +6,7 @@ flake8==3.6.0  # pyup: update minor
 tox==3.5.2  # pyup: update minor
 coverage==4.5.1  # pyup: update minor
 Sphinx==1.8.1  # pyup: update minor
-cryptography==2.3.1  # pyup: update minor
+cryptography==2.4.2  # pyup: update minor
 PyYAML==3.13  # pyup: update minor
 pytest==3.9.2  # pyup: update minor
 pytest-runner==4.2  # pyup: update minor
