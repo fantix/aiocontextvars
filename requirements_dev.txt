@@ -8,6 +8,6 @@ coverage==4.5.1  # pyup: update minor
 Sphinx==1.8.1  # pyup: update minor
 cryptography==2.3.1  # pyup: update minor
 PyYAML==3.13  # pyup: update minor
-pytest==3.9.2  # pyup: update minor
+pytest==4.1.0  # pyup: update minor
 pytest-runner==4.2  # pyup: update minor
 pytest-asyncio==0.9.0  # pyup: update minor
