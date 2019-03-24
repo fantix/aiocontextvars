@@ -1,5 +1,6 @@
 import pytest
-from aiocontextvars import ContextVar
+from contextvars import ContextVar
+import aiocontextvars  # noqa: F401
 
 
 def test_get():

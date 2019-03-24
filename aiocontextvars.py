@@ -44,10 +44,39 @@ if sys.version_info < (3, 7):
         task.context = copy_context()
         return task
 
+    def call_soon(loop, callback, *args):
+        if callback == Context.run:
+            return loop._orig_call_soon(callback, *args)
+        else:
+            context = copy_context()
+            return loop._orig_call_soon(context.run, lambda: callback(*args))
+
+    def call_later(loop, delay, callback, *args):
+        if callback == Context.run:
+            return loop._orig_call_later(delay, callback, *args)
+        else:
+            context = copy_context()
+            return loop._orig_call_later(
+                delay, context.run, lambda: callback(*args))
+
+    def call_at(loop, when, callback, *args):
+        if callback == Context.run:
+            return loop._orig_call_at(when, callback, *args)
+        else:
+            context = copy_context()
+            return loop._orig_call_at(
+                when, context.run, lambda: callback(*args))
+
     def _patch_loop(loop):
         if loop and not hasattr(loop, '_orig_create_task'):
             loop._orig_create_task = loop.create_task
             loop.create_task = types.MethodType(create_task, loop)
+            loop._orig_call_soon = loop.call_soon
+            loop.call_soon = types.MethodType(call_soon, loop)
+            loop._orig_call_later = loop.call_later
+            loop.call_later = types.MethodType(call_later, loop)
+            loop._orig_call_at = loop.call_at
+            loop.call_at = types.MethodType(call_at, loop)
         return loop
 
     def get_event_loop():
