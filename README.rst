@@ -14,6 +14,16 @@ experimentally provides the missing asyncio support for the
 ``contextvars`` backport library. Please read more in Python 3.7 `contextvars
 documentation <https://docs.python.org/3/library/contextvars.html>`_.
 
+Usage
+-----
+
+Import the `aiocontextvars` package before you create any aio tasks or loops::
+
+    import aiocontextvars  # noqa: F401
+    
+You can then import from the usual `contextvars` package to use the contextvars::
+
+    from contextvars import ContextVar
 
 Compatibility
 -------------
@@ -28,10 +38,13 @@ Python 3.7 ``contextvars`` implementation:
 
 Python 3.7 added keyword argument ``context`` to ``call_soon()`` and its family
 methods. By default those methods will copy (inherit) the current context and
-run the given method in that context. But ``aiocontextvars`` won't touch the
-loop, so in order to achieve the same effect, you'll need to::
+run the given method in that context. 
 
-    loop.call_soon(copy_context().run, my_meth)
+By default ``aiocontextvars`` will copy the current context with the patched
+function, however it won't recognise the context parameter. If you need to 
+run under a particular context, not copied from the current context use::
+
+    loop.call_soon(context.run, my_meth)
 
 2. Task local.
 
