@@ -12,7 +12,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'contextvars==2.3;python_version<"3.7"',
+    'contextvars==2.4;python_version<"3.7"',
 ]
 
 setup_requirements = [
