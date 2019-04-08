@@ -11,3 +11,4 @@ Contributors
 ------------
 
 * J.J. Jackson <jdot@cisco.com>
+* Marat Sharafutdinov <decaz89@gmail.com>
