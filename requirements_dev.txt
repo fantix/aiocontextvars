@@ -3,7 +3,7 @@ bumpversion==0.5.3  # pyup: update minor
 wheel==0.33.1  # pyup: update minor
 watchdog==0.9.0  # pyup: update minor
 flake8==3.7.6  # pyup: update minor
-tox==3.8.6  # pyup: update minor
+tox==3.11.1  # pyup: update minor
 coverage==4.5.1  # pyup: update minor
 Sphinx==2.0.1  # pyup: update minor
 cryptography==2.6.1  # pyup: update minor
