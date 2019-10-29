@@ -30,6 +30,8 @@ if sys.version_info < (3, 7):
 
 
     def _get_state():
+        if not hasattr(asyncio, "_get_running_loop"):
+            return _state
         loop = asyncio._get_running_loop()
         if loop is None:
             return _state
