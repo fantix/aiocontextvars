@@ -1,4 +1,4 @@
-pip==19.0.3  # pyup: update minor
+pip==20.0.1  # pyup: update minor
 bumpversion==0.5.3  # pyup: update minor
 wheel==0.33.1  # pyup: update minor
 watchdog==0.9.0  # pyup: update minor
