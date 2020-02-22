@@ -5,7 +5,7 @@ watchdog==0.9.0  # pyup: update minor
 flake8==3.7.6  # pyup: update minor
 tox==3.8.6  # pyup: update minor
 coverage==4.5.1  # pyup: update minor
-Sphinx==2.0.1  # pyup: update minor
+Sphinx==2.4.3  # pyup: update minor
 cryptography==2.6.1  # pyup: update minor
 PyYAML==5.1  # pyup: update minor
 pytest==4.4.0  # pyup: update minor
