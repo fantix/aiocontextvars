@@ -10,4 +10,4 @@ cryptography==2.6.1  # pyup: update minor
 PyYAML==5.1  # pyup: update minor
 pytest==4.4.0  # pyup: update minor
 pytest-runner==4.2  # pyup: update minor
-pytest-asyncio==0.10.0  # pyup: update minor
+pytest-asyncio==0.11.0  # pyup: update minor
